@@ -21,7 +21,6 @@ const systemMessages = [
 const WarningLanding = () => {
   const [visible, setVisible] = useState(false)
   const [timeLeft, setTimeLeft] = useState(14400)
-  const [glitchText, setGlitchText] = useState(false)
   const [warningBlink, setWarningBlink] = useState(false)
   const [messages, setMessages] = useState<string[]>([])
   const tickerRef = useRef<HTMLDivElement>(null);
@@ -29,11 +28,6 @@ const WarningLanding = () => {
 
   useEffect(() => {
     setVisible(true)
-
-    const glitchInterval = setInterval(() => {
-      setGlitchText(true)
-      setTimeout(() => setGlitchText(false), 200)
-    }, 10000)
 
     const warningInterval = setInterval(() => {
       setWarningBlink(true)
@@ -78,7 +72,6 @@ const WarningLanding = () => {
     window.addEventListener('resize', setupTicker);
 
     return () => {
-      clearInterval(glitchInterval)
       clearInterval(warningInterval)
       clearInterval(messageInterval)
       clearInterval(timer)
@@ -94,7 +87,7 @@ const WarningLanding = () => {
 
         <Alert className="w-full max-w-3xl bg-red-950/30 border-red-700 mb-8 p-0" style={{borderRadius: 0}}>
           <AlertDescription
-              className={`text-gray-200 ${glitchText ? 'opacity-90 translate-x-[1px]' : ''} transition-all duration-100`}>
+              className={`text-gray-200 transition-all duration-100`}>
             <h1 className="text-3xl text-center font-extrabold text-red-600 p-8">
               <span className="bg-red-700 text-black px-2">PUBLIC ADVISORY</span> HOSTILE AI AGENT
             </h1>
@@ -132,7 +125,7 @@ const WarningLanding = () => {
         <div className="ticker-tape-container">
           <div ref={tickerRef} className="ticker-tape-content">
             <p ref={contentRef} className="font-medium">
-              The prediction market currently active on the Solana, centered around the agent&#39;s behavior, is not
+              The decentralized prediction market currently active on the Solana, centered around the agent&#39;s behavior, is not
               affiliated with us!
             </p>
           </div>
