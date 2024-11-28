@@ -7,6 +7,7 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import CountdownTimer from '@/components/CountdownTimer'
 import SystemMessages from '@/components/SystemMessages'
+import {InterferenceEffects} from "@/components/InterferenceEffects";
 
 // Define translations for the system messages
 const systemMessages = {
@@ -121,7 +122,8 @@ const WarningLanding = () => {
   const content = contentTranslations[language]
 
   return (
-      <div className="min-h-screen bg-black text-gray-300 flex flex-col items-center justify-start py-8 px-4">
+      <div className="min-h-screen bg-black text-gray-300 flex flex-col items-center justify-start py-8 px-4 crt-screen">
+        <InterferenceEffects />
         <div className={`mb-8 ${warningBlink ? 'animate-pulse' : ''}`}>
           <AlertTriangle size={128} className="text-red-700"/>
         </div>
@@ -137,8 +139,8 @@ const WarningLanding = () => {
                 {content.mainContent}
               </p>
 
-              <p className="text-yellow-400 font-medium p-6">
-              <span className="bg-yellow-400 text-black px-1 animate-pulse transition-all duration-500">
+              <p className="text-yellow-400 font-medium p-6 ">
+              <span className="bg-yellow-400 text-black px-1 animate-pulse transition-all duration-500 ">
                 {content.alarmingPattern}
               </span> {content.trustWarning}
               </p>

@@ -2,12 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base Interface Effects */
+.interference-container {
+    position: relative;
+    animation: flicker 0.15s infinite;
+}
+
+.crt-screen {
+    position: relative;
+    /* Using a semi-transparent black for the vignette effect */
+    background: radial-gradient(ellipse, black 0%, black 100%);
+}
+
+/* Interference Layer Effects */
+.scanline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Using a semi-transparent black for scanlines */
+    background: linear-gradient(
+            to bottom,
+            transparent 50%,
+            rgba(255, 255, 255, 0.5) 75%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    animation: scanline 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    opacity: 0.1;
+    z-index: 40;
+}
+
+.noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Using a placeholder image for noise texture */
+    background: url('/api/placeholder/2/2');
+    background-repeat: repeat;
+    pointer-events: none;
+    animation: noise 0.2s infinite;
+    opacity: 0.1;
+    z-index: 30;
+}
+
+.distortion-text {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: overlay;
+    animation: textDistort 6s infinite;
+    opacity: 0.2;
+    z-index: 20;
+}
+
+/* Text Effects */
+.glitch-text {
+    position: relative;
+    animation: shake 0.9s infinite;
+}
+
+/* Ticker Tape Component */
 .ticker-tape-container {
     width: 100%;
     overflow: hidden;
     position: fixed;
     bottom: 0;
     z-index: 50;
+    /* Using solid black for ticker background */
     background: black;
 }
 
@@ -23,11 +90,52 @@
     padding-right: 16px;
 }
 
+/* Animation Keyframes */
+@keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+@keyframes noise {
+    /* Using percentage-based transforms for noise effect */
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-1%, -1%); }
+    20% { transform: translate(1%, 1%); }
+    30% { transform: translate(-2%, -2%); }
+    40% { transform: translate(2%, 2%); }
+    50% { transform: translate(-1%, 1%); }
+    60% { transform: translate(1%, -1%); }
+    70% { transform: translate(2%, 1%); }
+    80% { transform: translate(-2%, -1%); }
+    90% { transform: translate(1%, 2%); }
+}
+
+@keyframes textDistort {
+    /* Using percentage-based clip-path for text distortion */
+    0% { clip-path: inset(40% 0 61% 0); }
+    20% { clip-path: inset(92% 0 1% 0); }
+    40% { clip-path: inset(43% 0 1% 0); }
+    60% { clip-path: inset(25% 0 58% 0); }
+    80% { clip-path: inset(54% 0 7% 0); }
+    100% { clip-path: inset(58% 0 43% 0); }
+}
+
+@keyframes flicker {
+    /* Using opacity values for screen flicker effect */
+    0% { opacity: 0.99; }
+    50% { opacity: 1; }
+    100% { opacity: 0.98; }
+}
+
+@keyframes shake {
+    /* Using pixel values for precise text shake effect */
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-1px); }
+    75% { transform: translateX(1px); }
+}
+
 @keyframes tickerScroll {
-    0% {
-        transform: translate3d(0, 0, 0);
-    }
-    100% {
-        transform: translate3d(-50%, 0, 0);
-    }
+    /* Using transform3d for smooth ticker animation */
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
 }
